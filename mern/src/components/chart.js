@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Line } from "react-chartjs-2";
-
 import Chart from "chart.js/auto";
 
 const ChartComponent = () => {
@@ -20,7 +19,6 @@ const ChartComponent = () => {
           throw new Error("Failed to fetch data");
         }
         const data = response.data;
-        console.log("Fetched data:", data);
 
         const labels = data.map((item) => {
           const date = new Date(item.ts);
@@ -32,7 +30,6 @@ const ChartComponent = () => {
         });
         const machineStatusData = data.map((item) => item.machine_status);
 
-        
         const onesCount = machineStatusData.filter(
           (value) => value === 1
         ).length;
@@ -105,16 +102,11 @@ const ChartComponent = () => {
     <div className="flex justify-center text-2xl">
       {isLoading ? (
         <p className="mt-40 text-bold">Loading data.....</p>
-      
-      
       ) : (
         <div>
-          <div className="ml-20 ">
+          <div className="ml-20">
             <h2 className="py-4 px-36 font-bold">Chart</h2>
-
-           
-
-            <div className="" style={{ height: "150px", width: "600px" }}>
+            <div className="w-96 h-48">
               <Line
                 data={chartData}
                 options={{
@@ -134,25 +126,28 @@ const ChartComponent = () => {
               />
             </div>
           </div>
-          <h2 className="pt-16 px-96 ">Required options</h2>
-          <table className="mt-4 ">
-            <thead className="">
-              <tr>
-                <th className="px-4 py-2">Number of 1s</th>
-                <th className="px-4 py-2">Number of 0s</th>
-                <th className="px-4 py-2">Max Continuous 0s</th>
-                <th className="px-4 py-2">Max Continuous 1s</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="px-4 py-2">{summaryData.onesCount}</td>
-                <td className="px-4 py-2">{summaryData.zerosCount}</td>
-                <td className="px-4 py-2">{summaryData.maxContinuousZeros}</td>
-                <td className="px-4 py-2">{summaryData.maxContinuousOnes}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="mt-8 ml-20" style={{ marginTop: "2rem", paddingLeft: "20px", paddingRight: "20px" }}>
+  <h2 className="font-bold text-xl">Required options</h2>
+  <table className="mt-4" style={{ marginTop: "1rem" }}>
+    <thead>
+      <tr>
+        <th className="px-4 py-2">Number of 1s</th>
+        <th className="px-4 py-2">Number of 0s</th>
+        <th className="px-4 py-2">Max Continuous 0s</th>
+        <th className="px-4 py-2">Max Continuous 1s</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td className="px-4 py-2">{summaryData.onesCount}</td>
+        <td className="px-4 py-2">{summaryData.zerosCount}</td>
+        <td className="px-4 py-2">{summaryData.maxContinuousZeros}</td>
+        <td className="px-4 py-2">{summaryData.maxContinuousOnes}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
         </div>
       )}
     </div>
